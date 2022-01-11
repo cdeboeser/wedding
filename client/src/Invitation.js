@@ -215,7 +215,7 @@ function Invitation() {
 
   useEffect(() => {
     api
-      .get(`/api/invites/${inviteCode}`)
+      .get(`/invites/${inviteCode}`)
       .then((res) => {
         const { id, name, attending, guest1, guest2 } = res.data;
 
@@ -272,7 +272,7 @@ function Invitation() {
     setSubmitting(true);
 
     api
-      .put(`/api/invites/${inviteCode}`, submitData)
+      .put(`/invites/${inviteCode}`, submitData)
       .then(() => {
         setSubmitting(false);
         setSubmitted(true);
