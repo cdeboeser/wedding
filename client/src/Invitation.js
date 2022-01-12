@@ -18,7 +18,7 @@ const CenterWrapper = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  background-color: #44647b;
+  background-color: #2b597a;
 
   @media screen and (min-width: 960px) {
     background-color: #d2dbe2;
@@ -29,7 +29,7 @@ const CenterWrapper = styled.div`
 const ContentWrapper = styled.div`
   max-width: 480px;
   width: 100%;
-  background-color: #44647b;
+  background-color: #2b597a;
   display: flex;
   overflow: hidden;
 
@@ -50,7 +50,7 @@ const ContentWrapper = styled.div`
     border-radius: 32px;
 
     & img {
-      margin: 0px;
+      margin: auto 0;
       border-radius: 0px;
     }
   }
@@ -317,19 +317,19 @@ function Invitation() {
               {selection === 1 ? (
                 <>
                   <TextContainer>
-                    We are excited you will celebrate this exciting day with us!
+                    We are delighted to celebrate this exciting day with you!
                   </TextContainer>
                   <TextContainer style={{ fontSize: "1rem", opacity: 0.7 }}>
-                    Please remember to dress <b>smart casual</b>
-                    <br /> in shades of <b>cream and blue</b>.
+                    Dress Code: <br /> <b>Smart casual</b> in shades of{" "}
+                    <b>cream/blue</b>
                   </TextContainer>
                 </>
               ) : (
                 <TextContainer>
                   We are sorry to hear that you won't make it.
                   <br />
-                  <br /> Of course, we will miss you during the celebration, but
-                  we'll keep you in our hearts!
+                  <br /> We will miss you during the celebration, but we'll keep
+                  you in our hearts!
                 </TextContainer>
               )}
               <ButtonWrapper>
@@ -341,9 +341,7 @@ function Invitation() {
           ) : (
             <>
               <Header>Dear {name}</Header>
-              <TextContainer>
-                Kindly respond until 02 February 2022
-              </TextContainer>
+              <TextContainer>Kindly respond by 31 January 2021</TextContainer>
               <SelectionWrapper>
                 <SelectionItem
                   onClick={() => setSelection(1)}
