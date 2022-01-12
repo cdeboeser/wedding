@@ -74,6 +74,14 @@ app.get(
       };
     }
 
+    if (record.fields["Guest 3"]) {
+      response["guest3"] = {
+        attending: record.fields["G3 Attending"],
+        name: record.fields["Guest 3"],
+        choice: record.fields["G3 Food"],
+      };
+    }
+
     return res.status(200).json(response);
   })
 );
@@ -82,7 +90,7 @@ app.put(
   "/api/invites/:inviteId",
   wrap(async (req, res) => {
     const { inviteId } = req.params;
-    const { attending, guest1, guest2 } = req.body;
+    const { attending, guest1, guest2, guest3 } = req.body;
     const record = await getSingleRecord(inviteId);
 
     if (!record) {
@@ -101,6 +109,11 @@ app.put(
     if (!isUndefined(guest2)) {
       updateFields["G2 Attending"] = guest2.attending;
       updateFields["G2 Food"] = guest2.choice;
+    }
+
+    if (!isUndefined(guest3)) {
+      updateFields["G3 Attending"] = guest3.attending;
+      updateFields["G3 Food"] = guest3.choice;
     }
 
     await base("Invitations").update([

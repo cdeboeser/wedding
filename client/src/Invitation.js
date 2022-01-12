@@ -211,13 +211,19 @@ function Invitation() {
     choice: null,
   });
 
+  const [guest3, setGuest3] = useState({
+    name: null,
+    attending: true,
+    choice: null,
+  });
+
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     api
       .get(`/invites/${inviteCode}`)
       .then((res) => {
-        const { id, name, attending, guest1, guest2 } = res.data;
+        const { id, name, attending, guest1, guest2, guest3 } = res.data;
 
         setId(id);
         setName(name);
@@ -225,6 +231,9 @@ function Invitation() {
         setGuest1({ ...guest1, attending: guest1.attending === "Yes" });
         if (guest2) {
           setGuest2({ ...guest2, attending: guest2.attending === "Yes" });
+        }
+        if (guest3) {
+          setGuest3({ ...guest3, attending: guest3.attending === "Yes" });
         }
 
         if (attending !== "Pending") {
@@ -240,11 +249,19 @@ function Invitation() {
   const validate = () => {
     if (!selection) return false;
     if (selection === 2) return true;
-    if (!guest1.attending) return false;
-    if (guest1.choice === "Pending") return false;
+
+    if (!guest1.attending && !guest2.attending && !guest3.attending) {
+      return false;
+    }
+
+    if (guest1.attending && guest1.choice === "Pending") return false;
 
     if (guest2.name) {
       if (guest2.attending && guest2.choice === "Pending") return false;
+    }
+
+    if (guest3.name) {
+      if (guest3.attending && guest3.choice === "Pending") return false;
     }
 
     return true;
@@ -266,6 +283,13 @@ function Invitation() {
       submitData.guest2 = {
         ...guest2,
         attending: guest2.attending ? "Yes" : "No",
+      };
+    }
+
+    if (guest3.name) {
+      submitData.guest3 = {
+        ...guest3,
+        attending: guest3.attending ? "Yes" : "No",
       };
     }
 
@@ -320,8 +344,7 @@ function Invitation() {
                     We are delighted to celebrate this exciting day with you!
                   </TextContainer>
                   <TextContainer style={{ fontSize: "1rem", opacity: 0.7 }}>
-                    Dress Code: <br /> <b>Smart casual</b> in shades of{" "}
-                    <b>cream/blue</b>
+                    Dress Code: <br /> Smart casual in shades of cream/blue
                   </TextContainer>
                 </>
               ) : (
@@ -332,10 +355,16 @@ function Invitation() {
                   you in our hearts!
                 </TextContainer>
               )}
+              <TextContainer style={{ fontSize: "1rem", opacity: 0.7 }}>
+                If you have any questions, <br /> please contact Krizha or
+                Corvin.
+              </TextContainer>
               <ButtonWrapper>
-                <Button onClick={() => setSubmitted(false)}>
-                  Edit Response
-                </Button>
+                {new Date() <= new Date("2022-01-31") && (
+                  <Button onClick={() => setSubmitted(false)}>
+                    Edit Response
+                  </Button>
+                )}
               </ButtonWrapper>
             </>
           ) : (
@@ -382,6 +411,19 @@ function Invitation() {
                         selected={guest2.choice}
                         setSelected={(newValue) =>
                           setGuest2({ ...guest2, choice: newValue })
+                        }
+                      />
+                    )}
+                    {guest3.name && (
+                      <AttendeeDetails
+                        name={guest3.name}
+                        checked={guest3.attending}
+                        setChecked={(newValue) =>
+                          setGuest3({ ...guest3, attending: newValue })
+                        }
+                        selected={guest3.choice}
+                        setSelected={(newValue) =>
+                          setGuest3({ ...guest3, choice: newValue })
                         }
                       />
                     )}
