@@ -201,19 +201,19 @@ function Invitation() {
 
   const [guest1, setGuest1] = useState({
     name: null,
-    attending: true,
+    attending: false,
     choice: null,
   });
 
   const [guest2, setGuest2] = useState({
     name: null,
-    attending: true,
+    attending: false,
     choice: null,
   });
 
   const [guest3, setGuest3] = useState({
     name: null,
-    attending: true,
+    attending: false,
     choice: null,
   });
 
@@ -250,7 +250,15 @@ function Invitation() {
     if (!selection) return false;
     if (selection === 2) return true;
 
-    if (!guest1.attending && !guest2.attending && !guest3.attending) {
+    let numGuestsAttending = 0;
+
+    for (let guest of [guest1, guest2, guest3]) {
+      if (guest.attending) {
+        numGuestsAttending += 1;
+      }
+    }
+
+    if (numGuestsAttending === 0) {
       return false;
     }
 
