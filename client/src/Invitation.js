@@ -378,7 +378,7 @@ function Invitation() {
           ) : (
             <>
               <Header>Dear {name}</Header>
-              <TextContainer>Kindly respond by 31 January 2021</TextContainer>
+              <TextContainer>Kindly respond by 31 January 2022</TextContainer>
               <SelectionWrapper>
                 <SelectionItem
                   onClick={() => setSelection(1)}
